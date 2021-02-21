@@ -1,25 +1,19 @@
-// import dbConnect from '../../../utils/dbConnect';
+import dbConnect from '../../../utils/dbConnect';
 import Book from '../../../models/Book';
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 
-// dbConnect();
-const dbURI = process.env.MONGODB_URI;
+// const dbURI = process.env.MONGODB_URI;
 
-mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true });
-
-mongoose.connection
-   .once('open',()=>console.log('connection to DB open'))
-   .on('error',error=>console.log('error',error))  
-   
 
 export default async (req, res) => {
+   dbConnect()
    const { method } = req;
 
    switch (method) {
        case 'GET':
            try {
               
-              const notes = await Book.find({});
+              const notes = await Book.find({}).exec();
                res.status(200).json({ success: true, data: notes })
                
            } catch (error) {
@@ -42,8 +36,8 @@ export default async (req, res) => {
          break;
    }
    
-   await  mongoose.connection.close(()=>console.log('Connection DB closed'))
    }
+
 
 
 
