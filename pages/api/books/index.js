@@ -10,31 +10,31 @@ export default async (req, res) => {
    const { method } = req;
 
    switch (method) {
-       case 'GET':
-           try {
+      case 'GET':
+          try {
+             
+             const books = await Book.find({});
+              res.status(200).json({ success: true, data: books })
               
-              const notes = await Book.find({}).exec();
-               res.status(200).json({ success: true, data: notes })
-               
-           } catch (error) {
-               res.status(400).json({ success: false });
-           }
-           break;
-       case 'POST':
-           try {
+          } catch (error) {
+              res.status(400).json({ success: false });
+          }
+          break;
+      case 'POST':
+          try {
+             
+             const book = await Book.create(req.body);
+              res.status(201).json({ success: true, data: book })
               
-              const note = await Book.create(req.body);
-               res.status(201).json({ success: true, data: note })
-               
-           } catch (error) {
-               res.status(400).json({ success: false });
-           }
-           break;
+          } catch (error) {
+              res.status(400).json({ success: false });
+          }
+          break;
 
-       default:
-         res.status(400).json({ success: false });
-         break;
-   }
+      default:
+        res.status(400).json({ success: false });
+        break;
+  }
    
    }
 
