@@ -1,32 +1,29 @@
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import { Center, Container, Box ,Flex } from "@chakra-ui/react";
+import axios from 'axios';
+import Book from '../components/Book';
+// import styles from '../styles/Home.module.css'
 
-export default function Home() {
+
+
+export async function getStaticProps(context){
+   const url ='http://localhost:3000/api/books';
+   const {data} = await axios(url)
+
+   return {
+      props:{books : data.data} 
+   }
+}
+
+
+export default function Home({books}) {
+// console.log(books);
+
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Books</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">BOOKSTORE!</a>
-        </h1>
-
-        
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
+  
+      <div id='container'>
+         {books.map((b)=><Book key={b._id} title={b.title} description={b.description}/>)}
+      </div>
+      
   )
 }
