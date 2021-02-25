@@ -33,7 +33,7 @@ export default function newBook () {
       },
       validate,
       onSubmit: async(values) =>{
-         const url ='api/books';
+         const url ='/api/books';
          await axios.post(url,values)
          router.push("/");
        }
