@@ -12,6 +12,7 @@ import { useRouter} from 'next/router';
 const URL = ('http://localhost:3000/api/books')
 console.log(URL);
 
+
 export async function getServerSideProps(context) {
 
    const id = context.params.id.toString();
@@ -33,7 +34,8 @@ const deleteBook = ({data}) => {
    const onClose = () => setIsOpen(false)
 
    const deleteRedirect = async() => {
-      const url = `${URL}/${id}`;
+      // const url = `${URL}/${id}`;
+      const url ='/api/books'
       const del = await axios.delete(url);
       // console.log(del)
       router.push('/');

@@ -16,8 +16,12 @@ import { useQuery} from 'react-query';
 //    }
 // }
 
+// const HOSTNAME=process.env.HOSTNAME || 'localhost';
+// const PORT = process.env.PORT || 3000;
+// const url ='http://{HOSTNAME}:{PORT}/api/books';
+
 async function fetchBooks(){
-   const url ='http://localhost:3000/api/books';
+   const url = '/api/books'
    const res = await fetch(url)
    const dt= await res.json();
    return dt
