@@ -1,4 +1,4 @@
-import { Text,Button,Center, Stack,Wrap,  
+import { Text,Button,Center, Stack,Wrap, Spinner,  
    AlertDialog,
    AlertDialogBody,
    AlertDialogFooter,
@@ -6,36 +6,55 @@ import { Text,Button,Center, Stack,Wrap,
    AlertDialogContent,
    AlertDialogOverlay,} from "@chakra-ui/react";
 import axios from 'axios';
-import { useState,useRef } from 'react';
-import { useRouter} from 'next/router';
-
-const URL = ('http://localhost:3000/api/books')
-console.log(URL);
+import { useState, useRef, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { useQuery} from 'react-query';
 
 
-export async function getServerSideProps(context) {
+// export async function getServerSideProps(context) {
 
-   const id = context.params.id.toString();
-   const url =`${URL}/${id}`;
-   const data = await axios(url)
-   // console.log(data.data.data);
-   return {
-      props:{data:data.data.data}
-   }
-}
+//    const id = context.params.id.toString();
+//    const url =`${URL}/${id}`;
+//    const data = await axios(url)
+//    // console.log(data.data.data);
+//    if (!data) {
+//       return {
+//         notFound: true,
+//       }
+//     }
+  
+//    return {
+//       props:{data:data.data.data}
+//    }
+// }
 
-const deleteBook = ({data}) => {
 
-   const id = data._id;
+const deleteBook = () => {
+
+   // const id = data._id;
+   // console.log(id);
    const [isOpen, setIsOpen] = useState(false)
    const cancelRef = useRef();
    const router = useRouter();
-   
+   const id = router.query.id
+   const url =`/api/books/${id}`
+
    const onClose = () => setIsOpen(false)
 
+   
+  async function  fetchBook(){
+     let bk = await axios(url)
+   //   console.log('in',bk.data);
+     return bk.data.data
+  }
+
+  const{data,isPreviousData, status} = useQuery(['book'], fetchBook, {
+   keepPreviousData: true
+ } );
+
+   // if(status=== 'success') console.log(data.title);
+ 
    const deleteRedirect = async() => {
-      // const url = `${URL}/${id}`;
-      const url ='/api/books'
       const del = await axios.delete(url);
       // console.log(del)
       router.push('/');
@@ -43,6 +62,24 @@ const deleteBook = ({data}) => {
 
 
    return (
+      <>
+      {status === 'loading' && (
+         <Center mt='40'>
+            <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="blue.500"
+            size="xl"
+            />
+         </Center>
+      )}
+
+      {status === 'error' && (
+        <div>Error fetching data</div>
+      )}
+
+      {status === 'success' && 
       <Center bg='#385898' my='36' w='60%' mx='auto' p='5rem' borderRadius='md'>
             <Stack>
                <Stack mb='10'>
@@ -83,7 +120,8 @@ const deleteBook = ({data}) => {
                      </AlertDialogOverlay>
                </AlertDialog>
             </Stack>
-      </Center>
+      </Center>}
+      </>
      );
 }
 

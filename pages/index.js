@@ -6,33 +6,25 @@ import { useQuery} from 'react-query';
 // import axios from 'axios';
 
 
-
-// export async function getStaticProps(context){
-//    const url ='http://localhost:3000/api/books';
-//    const {data} = await axios(url)
-
-//    return {
-//       props:{books : data.data} 
-//    }
-// }
-
 // const HOSTNAME=process.env.HOSTNAME || 'localhost';
 // const PORT = process.env.PORT || 3000;
 // const url ='http://{HOSTNAME}:{PORT}/api/books';
 
-async function fetchBooks(){
-   const url = '/api/books'
-   const res = await fetch(url)
-   const dt= await res.json();
-   return dt
-}
 
+export default function Home() {
 
-export default function Home({books}) {
+   async function fetchBooks(){
+      const url = '/api/books'
+      const res = await fetch(url)
+      const dt= await res.json();
+      return dt
+   }
+      
+
    const{data,isPreviousData, status} = useQuery(['books'], fetchBooks, {
       keepPreviousData: true
     } );
-//   if(status=== 'success') console.log(data.data);\
+//   if(status=== 'success') console.log(data.data);
 
 
   return (
