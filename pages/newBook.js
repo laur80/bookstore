@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useRouter} from 'next/router';
 import { useFormik } from 'formik';
 import axios from 'axios';
-import { Input,FormControl, FormLabel,Textarea,Button,Center, Spinner, Stack,Form,Wrap} from "@chakra-ui/react";
+import { Input,FormControl, FormLabel,Textarea,Button,Center, Stack,Form,Wrap} from "@chakra-ui/react";
 
 
 export default function newBook () {
@@ -40,10 +40,10 @@ export default function newBook () {
     });
    
     return (
-       <Wrap bg='aliceblue' my='36' w='60%' mx='auto' p='5rem'>
+       <Wrap bg='#385898' my='36' w='60%' mx='auto' p='5rem' borderRadius='lg'>
             <Stack mx='auto' w='80%'>
                   <form onSubmit={formik.handleSubmit}>
-                  <FormLabel htmlFor="title">Book title</FormLabel>
+                  <FormLabel htmlFor="title" color='whiteAlpha.900'>Book title</FormLabel>
                   <Input
                      bg='white'
                      id="title"
@@ -57,7 +57,7 @@ export default function newBook () {
                      <div>{formik.errors.title}</div>
                   ) : null}
             
-                  <FormLabel htmlFor="author">Author Name</FormLabel>
+                  <FormLabel htmlFor="author" color='whiteAlpha.900'>Author Name</FormLabel>
                   <Input
                      bg='white'
                      id="author"
@@ -71,9 +71,11 @@ export default function newBook () {
                      <div>{formik.errors.author}</div>
                   ) : null}
             
-                  <FormLabel htmlFor="description">Book Description</FormLabel>
+                  <FormLabel htmlFor="description" color='whiteAlpha.900'>Book Description</FormLabel>
                   <Textarea
-                     py='2'
+                     mb='8'
+                     h='40'
+                     p='2'
                      bg='white'
                      id="description"
                      name="description"
@@ -85,8 +87,10 @@ export default function newBook () {
                   {formik.touched.description && formik.errors.description ? (
                      <div>{formik.errors.description}</div>
                   ) : null}
-            
-                  <Button type="submit">Submit</Button>
+                  <Center>
+                     <Button colorScheme="red" type="submit">Create Book</Button>
+                  </Center>   
+               
                </form>
             </Stack>
       </Wrap>

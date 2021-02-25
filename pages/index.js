@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { Center, Container, Box ,Flex, Spinner } from "@chakra-ui/react";
+import { Center, Spinner, Stack, Skeleton, Wrap} from "@chakra-ui/react";
 import Book from '../components/Book';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { useQuery} from 'react-query';
@@ -28,7 +28,8 @@ export default function Home({books}) {
    const{data,isPreviousData, status} = useQuery(['books'], fetchBooks, {
       keepPreviousData: true
     } );
-//   if(status=== 'success') console.log(data.data);
+//   if(status=== 'success') console.log(data.data);\
+
 
   return (
    <>
@@ -52,8 +53,9 @@ export default function Home({books}) {
 
       {status === 'success' && 
       <div id='container'>
-         {data.data.map((b)=><Book key={b._id} title={b.title} description={b.description} author={b.author}/>)}
+         {data.data.map((b)=><Book key={b._id} title={b.title} description={b.description} author={b.author} id={b._id} b={b}/>)}
       </div>}
+    
       <ReactQueryDevtools initialIsOpen={false} />
     </>  
   )

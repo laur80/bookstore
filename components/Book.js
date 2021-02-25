@@ -1,8 +1,13 @@
-import { Box,VStack,Center,Divider,Text, Button, Image as ImageChackra} from "@chakra-ui/react";
+import {  Box,VStack,Divider,Text, Button, Center, Spinner, Stack,Skeleton,
+   Editable, EditableInput, EditablePreview, Flex,IconButton, Wrap,ButtonGroup } from "@chakra-ui/react";
+import {  EditIcon,CheckIcon,CloseIcon } from '@chakra-ui/icons'
 import Link from 'next/link';
-import Image from 'next/image'
+import Image from 'next/image';
+import CustomControlsExample from './Edit'
 
-const Book = ({title,description,author}) => {
+
+const Book = ({title,description,author,id,b}) => {
+// console.log(b);
    
    return ( 
       <div id='card' >
@@ -24,6 +29,7 @@ const Book = ({title,description,author}) => {
             fontWeight='medium'
             // textTransform='uppercase'
             >{author}</Text>
+            {/* {CustomControlsExample([author,'author',{'title':title},{'description':description}])} */}
             <Divider orientation="horizontal" p={0.4} background='gray.500'/>
             <Center>
                <Text
@@ -31,12 +37,18 @@ const Book = ({title,description,author}) => {
                fontSize='md'
                mx='8'
                >{description}</Text>
+               {/* {CustomControlsExample([description,'description',{'title':title},{'author':author}])} */}
             </Center>
          </VStack>
          
          <div  className='bt'>
-            <Button colorScheme="facebook"  >View</Button>
-            <Button colorScheme="facebook">Edit</Button>
+            <Link  href={`/delete/${id}`}><a>
+               <Button colorScheme="red" >Delete</Button>
+            </a></Link>
+            
+            <Link  href={`/edit/${id}`}><a>
+               <Button colorScheme="facebook" px='7' >Edit</Button>
+            </a></Link>
          </div>
 
       </div>
