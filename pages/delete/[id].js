@@ -7,36 +7,34 @@ import { Text,Button,Center, Stack,Wrap, Spinner,
    AlertDialogOverlay,} from "@chakra-ui/react";
 import axios from 'axios';
 import { useState, useRef, useEffect } from 'react';
-import { useRouter } from 'next/router';
 import { useQuery} from 'react-query';
+import { useRouter } from 'next/router';
 
 
-// export async function getServerSideProps(context) {
+export async function getServerSideProps(context) {
 
-//    const id = context.params.id.toString();
-//    const url =`${URL}/${id}`;
-//    const data = await axios(url)
-//    // console.log(data.data.data);
-//    if (!data) {
-//       return {
-//         notFound: true,
-//       }
-//     }
+   const id = context.params.id.toString();
+
+   if (!id) {
+      return {
+        notFound: true,
+      }
+    }
   
-//    return {
-//       props:{data:data.data.data}
-//    }
-// }
+   return {
+      props:{id}
+   }
+}
 
 
-const deleteBook = () => {
+const deleteBook = ({id}) => {
 
    // const id = data._id;
    // console.log(id);
    const [isOpen, setIsOpen] = useState(false)
    const cancelRef = useRef();
    const router = useRouter();
-   const id = router.query.id
+   // const id = router.query.id
    const url =`/api/books/${id}`
 
    const onClose = () => setIsOpen(false)
