@@ -8,6 +8,7 @@ import CustomControlsExample from './Edit'
 
 const Book = ({title,description,author,id,b}) => {
 // console.log(b);
+const propDesc = [{'description': description},{'title':title},{'author':author},{'id':id}]
    
    return ( 
       <div id='card' >
@@ -37,7 +38,7 @@ const Book = ({title,description,author,id,b}) => {
                fontSize='md'
                mx='8'
                >{description}</Text>
-               {/* {CustomControlsExample([description,'description',{'title':title},{'author':author}])} */}
+               {/* {CustomControlsExample(propDesc)} */}
             </Center>
          </VStack>
          
